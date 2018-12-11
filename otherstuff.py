@@ -6,7 +6,7 @@ class Creature(object):
 
     # shall be extended with different types of class (e.g. aviary, ground-based, water, hostile, etc. )
     
-    def __init__(self, name, type, speed, damage, items):
+    def __init__(self, name, creatureType, speed, damage, items):
         self.name = name
         self.type = creatureType
         self.speed = speed
@@ -15,7 +15,7 @@ class Creature(object):
 
 
 class Item(object):
-    def __init__(itemType, owner, name):
+    def __init__(self, itemType, owner, name):
 
         # create the attributes of the item
         # contains all of the information for what the item is, including the name, description, etc.
@@ -32,10 +32,8 @@ class Player(Creature):
     # the players that are part of the party
 
     def __init__(self, cash, role):
-        self.name = name
         self.cash = 0
         self.role = role
 
     
-
 
