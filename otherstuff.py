@@ -2,6 +2,10 @@
 
 # RPG game
 
+# still need to write up the plan for this but oh well
+
+
+
 class Creature(object):
 
     # shall be extended with different types of class (e.g. aviary, ground-based, water, hostile, etc. )
