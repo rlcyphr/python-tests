@@ -1,6 +1,6 @@
 # tests for stuff
 
-import tkinter as tk
+import Tkinter as tk
 
 class App(tk.Frame):
 
