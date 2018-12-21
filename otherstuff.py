@@ -85,8 +85,12 @@ class Player(Creature):
             self.role = self.checkRole(input("What role do you want? "))
         self.cash = 0
 
+    
 
     def checkRole(self, role):
+
+        # method of checking if the role entered is correct
+
         if str(role) not in self._roles:
             print("That's not a valid role! \n")
             return None
@@ -106,22 +110,15 @@ class Monster(Creature):
 
 
 def main():
+
     # main function for testing stuff
-    '''
-    newMonster = Monster('Zombleworth', 6)
 
-    print ', '.join(newMonster.__dict__)
-
-    for i in newMonster.__dict__:
-        print newMonster.__dict__[i]
-    '''
     # creation of a player
 
     newPlayer = Player()
 
     print("The role type of %s is %s. " % (newPlayer.name, newPlayer.role))
 
-    # print newPlayer.__dict__
 
     
 
