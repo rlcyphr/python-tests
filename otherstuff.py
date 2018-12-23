@@ -32,14 +32,13 @@ class Creature:
 
 class Item:
 
-    def __init__(self, itemType, name, owner=None):
+    def __init__(self, itemType, owner=None):
 
         # create the attributes of the item
-        # contains all of the information for what the item is, including the name, description, etc.
+        # contains all of the information for what the item is, including the description, etc.
         # abstract class extended for weapons, food, medicine, and all other types of item
 
         self.type = itemType
-        self.name = name
         self.owner = owner
         
 
@@ -72,11 +71,11 @@ class Player(Creature):
 
         # get the name of the player
 
-        print(self.name + " is the name of the superclass")
+        
 
         self.name = input('What is your name? ')
 
-
+        print(self.name + " is the name of the superclass")
 
         # create the role of the player - this allows the instantiation process to be done with only a single line later on
 
@@ -97,6 +96,17 @@ class Player(Creature):
             return None
         return self._roles[str(role)]
 
+    def addItem(self, *args):
+        # this is going to be used to set the inventory of a user.
+        # *args allows this to be filled with an arbitrary amount of things to add to the inv
+
+        # will fill the inventory of the player - different way to how creatures' inventory will work (set items that cannot change in any way once set)
+
+        print(self.items)
+
+
+
+
 
 class Monster(Creature):
     # thing that is hostile to the player
@@ -114,15 +124,28 @@ class Weapon(Item):
 
     _weapons = [] # list of all the items of this type
 
-    def __init__(self, weapon_type, damage=None):
+    def __init__(self, weapon_type, damage):
 
-        super().__init__('Weapon', weapon_type, damage)
+        # weapon_type is the specific type of weapon that this is
+        # and damage is the amount of damage that this thing can inflict
+
+
+        super().__init__('Weapon') # make an 'Item' type - second argument will be the owner of this weapon
+        self.setWeapon(weapon_type, damage) 
         Weapon._weapons.append(self)
 
-    @classmethod
 
+    def setWeapon(self, weapon_type, damage):
+        # set the specific things for this type of item
+        self.weapon_type = weapon_type
+        self.damage = damage
+
+
+
+
+    @classmethod
     def getList(self):
-        
+        # get a list of all of the weapon type items that exist, including the type, owner, and damage
         for i in Weapon._weapons:
             print(i.__dict__)
 
@@ -152,7 +175,7 @@ def main():
 
     newWeapon2 = Weapon('Gun', 50) # other weapon in _weapons
 
-    Weapon.getList()
+    Weapon.getList() # print a list of all weapons
 
     
 
