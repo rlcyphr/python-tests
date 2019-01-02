@@ -9,13 +9,14 @@ class Creature:
 
     # shall be extended with different types of class (e.g. aviary, ground-based, water, hostile, etc. )
     
-    def __init__(self, name, creatureType, speed, damage, items, location):
+    def __init__(self, name, creatureType, speed, damage, items, location, holding=None):
         self.name = name
         self.type = creatureType
         self.speed = speed
         self.damage = damage
-        self.items = items # their inventory - will be an array containing Item objects
+        self.items = items # their inventory - will be an array containing Item objects (can hold a maximum of 15 items)
         self.location = location
+        self.holding = holding
 
 
     def move(self, locx, locy):
@@ -40,12 +41,14 @@ class Item:
 
         self.type = itemType
         self.owner = owner
+
+
         
 
 
-# -------------------------------
-# ---- Other classes go here ----
-# -------------------------------
+# ---------------------------------------
+# ---- Creature-type classes go here ----
+# ---------------------------------------
 
 
 # ---- Creatures of all kinds ----
@@ -57,6 +60,8 @@ class Player(Creature):
     # the players that are part of the party
 
     # 'role' is the specific feature of the player object
+
+    # all players will be put in the (1, 1) region, from 0 to 50 on each axis
 
     def __init__(self, speed=5, damage=10):
 
@@ -70,8 +75,6 @@ class Player(Creature):
     def createPlayer(self):
 
         # get the name of the player
-
-        
 
         self.name = input('What is your name? ')
 
@@ -116,7 +119,10 @@ class Monster(Creature):
         super().__init__(name, 'Monster', speed, damage, [], (0, 0)) # make a Creature class
 
 
-# ---- Items ----
+#----------------------------
+# ---- Item Type Classes ----
+# ---------------------------
+
 
 class Weapon(Item):
 
@@ -150,7 +156,47 @@ class Weapon(Item):
             print(i.__dict__)
 
 
+# ----------------------------------
+# ---- World-associated classes ----
+# ----------------------------------
 
+class Region:
+
+    _regions = {} 
+
+    # list of all regions in the map
+    # regions are created east and west, north and south of the starting point, and are 50x50 spaces each. 
+    # Each region is referred to by how many spaces in each of the directions it is: for instance, if a region
+    # is 1 space west and 3 spaces south, it would be set as a tuple (-1, 3) 
+
+    def __init__(self, x, y):
+
+
+        # build a region that is 50x50, and which has a certain position on the map
+        # the region will be created empty, and populated with items once it has been
+        # instantiated.
+
+        self.area = []
+        self.fill_area() # fill the area with asterisks
+        Region._regions[(x, y)] = self
+    
+    def fill_area(self):
+        for i in range(50):
+            self.area.append([])
+            for j in range(50):
+                self.area[i].append('*')
+
+    def print_region(self):
+        # print each row of the region
+        for i in self.area:
+            print(' '.join(j for j in i))
+
+
+    @classmethod
+    def get_regions(self):
+        # print all of the attributes of each region 
+        for i in Region._regions:
+            print(Region._regions[i].__name__)
 
 
 def main():
@@ -175,8 +221,15 @@ def main():
 
     newWeapon2 = Weapon('Gun', 50) # other weapon in _weapons
 
+    newWeapon3 = Weapon('Gun', 15)
+
     Weapon.getList() # print a list of all weapons
 
+    newRegion = Region(1, 1)
+
+    newRegion.print_region()
+
+    Region.get_regions()
     
 
 
